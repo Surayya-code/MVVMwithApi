@@ -1,5 +1,6 @@
 package com.example.mvvmwithapi.ui.home
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +18,7 @@ class HomeMVVM:ViewModel() {
         getProductApi()
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun getProductApi(){
         viewModelScope.launch {
         loading.value=true

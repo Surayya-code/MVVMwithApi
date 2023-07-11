@@ -10,7 +10,7 @@ fun ImageView.loadURL(url:String?){
             .with(this)
             .load(url)
             .centerCrop()
-            .placeholder(R.drawable.ic_android_black_24dp)
+            .placeholder(R.drawable.baseline_download_for_offline_24)
             .into(this);
 
     }
