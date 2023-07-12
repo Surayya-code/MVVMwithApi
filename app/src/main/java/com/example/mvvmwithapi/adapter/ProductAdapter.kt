@@ -2,14 +2,15 @@ package com.example.mvvmwithapi.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvmwithapi.databinding.ItemProductBinding
 import com.example.mvvmwithapi.model.ProductResponseModelItem
-import java.security.ProtectionDomain
 
 class ProductAdapter :RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
 
-    val productList= arrayListOf<ProductResponseModelItem>()
+    //val productList= arrayListOf<ProductResponseModelItem>()
 
     inner class ProductViewHolder(private val  itemProductBinding: ItemProductBinding):RecyclerView.ViewHolder(itemProductBinding.root){
        fun bind(productResponseModelItem: ProductResponseModelItem){
@@ -23,15 +24,34 @@ class ProductAdapter :RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
     }
 
     override fun getItemCount(): Int {
-     return productList.size
+        return differ.currentList.size
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.bind(productList[position])
+        holder.bind(differ.currentList[position])
     }
-   fun updateList(list:List<ProductResponseModelItem>){
-       productList.clear()
-       productList.addAll(list)
-       notifyDataSetChanged()
-   }
+
+    //   fun updateList(list:List<ProductResponseModelItem>){
+//       productList.clear()
+//       productList.addAll(list)
+//       notifyDataSetChanged()
+//   }
+    val differ = AsyncListDiffer(this, diffUtilProduct)
+
+    object diffUtilProduct : DiffUtil.ItemCallback<ProductResponseModelItem>() {
+        override fun areItemsTheSame(
+            oldItem: ProductResponseModelItem,
+            newItem: ProductResponseModelItem
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: ProductResponseModelItem,
+            newItem: ProductResponseModelItem
+        ): Boolean {
+            return oldItem == newItem
+        }
+
+    }
 }

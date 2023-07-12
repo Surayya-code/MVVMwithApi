@@ -2,7 +2,6 @@ package com.example.mvvmwithapi.ui.home
 
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.example.mvvmwithapi.R
 import com.example.mvvmwithapi.adapter.ProductAdapter
 import com.example.mvvmwithapi.base.BaseFragment
 import com.example.mvvmwithapi.databinding.FragmentHomeBinding
@@ -21,7 +20,7 @@ class HomeFragment : BaseFragment<HomeMVVM,FragmentHomeBinding>(
     override fun observeEvents() {
     viewModel.data.observe(viewLifecycleOwner){
         //Log.e("gelenData",it.toString())
-        productAdapter.updateList(it)
+        productAdapter.differ.submitList(it)
     }
         viewModel.loading.observe(viewLifecycleOwner){
             if(it){
